@@ -45,6 +45,14 @@ class NewsModel extends Model
             return $this->findAll();
         }
 
-        return $this->where(['slug' => $slug])-> first();
+        return $this->where(['slug' => $slug])->first();
+    }
+
+    public function getNewsById($newsId = null){
+        if(!$newsId){
+            return [];
+        }
+
+        return $this->where(['id' => $newsId])->first();
     }
 }

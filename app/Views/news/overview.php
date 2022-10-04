@@ -1,5 +1,9 @@
 <h2><?= esc($title) ?></h2>
 
+<?php if(session()->getFlashdata('doUpdateSuccess')) : ?>
+    <h4><?= session()->getFlashdata('doUpdateSuccess'); ?></h4>
+<?php endif; ?>
+
 <?php if(! empty($news) && is_array($news)): ?>
     <?php foreach ($news as $newsItem): ?>
 
@@ -8,6 +12,13 @@
             <?= esc($newsItem['body']) ?>
         </div>
         <p><a href="/news/<?= esc($newsItem['slug'], 'url')?>">View Article</a></p>
+        <form action="/news/<?= esc($newsItem['id']) ?>" method="post">
+            <?= csrf_field() ?>
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit">Delete</button>
+        </form>
+
+        <p><a href="/news/edit/<?= esc($newsItem['id'], 'url')?>">Edit Article</a></p>
 
     <?php endforeach ?> 
 
